@@ -13,11 +13,13 @@
 		"noUnusedLocals": true,
 		"noImplicitThis": true,
 		"strictNullChecks": true,		
-		"rootDir": "."
+		"rootDir": ".",
+		"composite": true
 	},
   "exclude": [
+		"out",
 		"node_modules",
 		"server",
-    "html_views"
+		"html_views"
 	]
 }

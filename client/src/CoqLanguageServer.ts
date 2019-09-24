@@ -23,7 +23,7 @@ import * as vscodeClient from 'vscode-languageclient';
 
 function createServerLocalExtension(serverModule: string, debugOptions: string[]): ServerOptions {
   const options: { run: vscodeClient.NodeModule; debug: vscodeClient.NodeModule } = {
-    run: { module: serverModule, transport: TransportKind.ipc },
+    run: { module: serverModule, transport: TransportKind.ipc, options: { execArgv: debugOptions } },
     debug: { module: serverModule, transport: TransportKind.ipc, options: { execArgv: debugOptions } }
   }
   return options;
@@ -39,9 +39,9 @@ export class CoqLanguageServer implements vscode.Disposable {
 
   private constructor(context: ExtensionContext) {
     // The server is implemented in node
-    let serverModule = context.asAbsolutePath(path.join('server/src', 'server.js'));
+    let serverModule = context.asAbsolutePath(path.join('server', 'out', 'server.js'));
     // The debug options for the server
-    let debugOptions = ["--nolazy", "--debug=6005"];
+    let debugOptions = ["--nolazy", "--inspect=6005"];
 
     // let serverOptions = createServerProcess(serverModule, debugOptions);
     let serverOptions = createServerLocalExtension(serverModule, debugOptions);

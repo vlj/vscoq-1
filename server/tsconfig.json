@@ -4,15 +4,18 @@
 		"lib": [ "es6" ],
 		"module": "commonjs",
     "moduleResolution": "node",
-		"outDir": "../client/server",
+		"outDir": "out",
 		"sourceMap": true,
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
 		"noFallthroughCasesInSwitch": true,
 		"noUnusedLocals": true,
 		"pretty": true,
-		"types": ["diff", "mocha", "node", "sax", "xml2js"]
+		"types": ["diff", "mocha", "node", "sax", "xml2js"],
+		"composite": true,
+		"rootDir": "src"
 	},
+	"include": ["src"],
 	"exclude": [
 		"node_modules"
 	]

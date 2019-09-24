@@ -107,13 +107,13 @@ export class CoqTop extends IdeSlave8 implements coqtop.CoqTop {
     const port = 0;
     const host = 'localhost';
     return new Promise<void>((resolve,reject) => {
-      server.listen({port: port, host: host}, (err:any) => {
-        if (err)
-          reject(err);
-        else {
-          this.console.log(`Listening at ${server.address().address}:${server.address().port}`);
+      server.listen({port: port, host: host}, () => {
+        // if (err)
+        //   reject(err);
+        // else {
+          this.console.log(`Listening at ${server.address()}:${server.address()}`);
           resolve();
-        }
+        // }
       });
     });
   }
@@ -137,6 +137,26 @@ export class CoqTop extends IdeSlave8 implements coqtop.CoqTop {
   }
 
 
+  private static GetIP(address: string | net.AddressInfo) : string
+  {
+    if (typeof address === "string") {
+      return address;
+    }
+    else {
+      return address.address;
+    }
+  }
+
+  private static GetPort(address: string | net.AddressInfo) : number
+  {
+    if (typeof address === "string") {
+      return -1;
+    }
+    else {
+      return address.port;
+    }
+  }
+
   /** Start coqtop.
    * Use two ports: one for reading & one for writing; i.e. HOST:READPORT:WRITEPORT
    */
@@ -144,11 +164,11 @@ export class CoqTop extends IdeSlave8 implements coqtop.CoqTop {
     await Promise.all(this.readyToListen);
 
     var mainAddr = this.mainChannelServer.address();
-    var mainPortW = this.mainChannelServer2.address().port;
+    var mainPortW = CoqTop.GetPort(this.mainChannelServer2.address());
     var controlAddr = this.controlChannelServer.address();
-    var controlPortW = this.controlChannelServer2.address().port;
-    var mainAddressArg = mainAddr.address + ':' + mainAddr.port + ':' + mainPortW;
-    var controlAddressArg = controlAddr.address + ':' + controlAddr.port + ':' + controlPortW;
+    var controlPortW = CoqTop.GetPort(this.controlChannelServer2.address());
+    var mainAddressArg = CoqTop.GetIP(mainAddr) + ':' + CoqTop.GetPort(mainAddr) + ':' + mainPortW;
+    var controlAddressArg = CoqTop.GetIP(controlAddr) + ':' + CoqTop.GetPort(controlAddr) + ':' + controlPortW;
 
     try {
       this.startCoqTop(this.spawnCoqTop(mainAddressArg, controlAddressArg));
@@ -200,11 +220,11 @@ export class CoqTop extends IdeSlave8 implements coqtop.CoqTop {
   }
 
   private get coqtopBin() {
-    return path.join(this.settings.binPath.trim(), 'coqtop');
+    return path.join(this.settings.binPath.trim(), 'coqtop.exe');
   }
 
   private get coqidetopBin() {
-    return path.join(this.settings.binPath.trim(), 'coqidetop');
+    return path.join(this.settings.binPath.trim(), 'coqidetop.exe');
   }
 
   private spawnCoqTop(mainAddr : string, controlAddr: string) {

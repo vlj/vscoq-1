@@ -29,16 +29,8 @@
   },
   "devDependencies": {
     "@types/mocha": "^2.2.39",
-    "@types/node": "^7.0.5",
     "mocha": "^6.1.4",
-    "ts-prune": "^0.2.3",
-    "typescript": "^2.1.6"
-  },
-  "scripts": {
-    "compile": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc -p ./",
-    "watch": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc --watch -p ./",
-    "test": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc -p ./ && mocha -u tdd ../client/server/test",
-    "test-debug": "installServerIntoExtension ../client ./package.json ./tsconfig.json && tsc -p ./ && mocha -u tdd --debug-brk=5858 ../client/server/test"
+    "ts-prune": "^0.2.3"
   },
   "repository": {
     "type": "git",
