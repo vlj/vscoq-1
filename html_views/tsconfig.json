@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
 		"target": "es6",
-		"module": "commonjs",
-		"outDir": "out",
+		"module": "amd",
+		"outDir": "../client/html_views",
 		"noLib": false,
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitAny": true,
@@ -11,11 +11,8 @@
 		"noUnusedLocals": true,
 		"noImplicitThis": true,
 		"strictNullChecks": true,
-		"sourceMap": true,
+		"sourceMap": true
 	},
-	"include": [
-		"src"
-	],
   "exclude": [
 		"node_modules"
 	]

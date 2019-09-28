@@ -134,12 +134,12 @@ let updateResultsAlternatingBackgroundTimer : number;
 function updateResultsAlternatingBackground(delay?: number) {
   if(updateResultsAlternatingBackgroundTimer)
     clearTimeout(updateResultsAlternatingBackgroundTimer);
-  // if(delay)
-  //   updateResultsAlternatingBackgroundTimer = setTimeout(() => updateResultsAlternatingBackground(), delay);
-  // else {
+  if(delay)
+    updateResultsAlternatingBackgroundTimer = setTimeout(() => updateResultsAlternatingBackground(), delay);
+  else {
     $('#results tr:visible:even').removeClass('result-odd');
     $('#results tr:visible:odd').addClass('result-odd');
-  // }
+  }
 }
 
 

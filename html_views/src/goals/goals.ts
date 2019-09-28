@@ -12,10 +12,10 @@ var throttleEventHandler = <X>(handler: (x:X) => void) => (event:X) => {
   if(throttleTimeoutCount == 1)
     handler(event);
   else if(!throttleTimeout) {
-    // throttleTimeout = setTimeout(() => {
-    //   throttleTimeout = null;
-    //   handler(event);
-    // }, 500);
+    throttleTimeout = setTimeout(() => {
+      throttleTimeout = null;
+      handler(event);
+    }, 500);
   }
 }
 
