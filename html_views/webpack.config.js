@@ -30,7 +30,7 @@ function getWebviewConfig(env) {
 		},
 		output: {
 			filename: '[name]/[name].js',
-			path: path.resolve(__dirname, '../client/html_views')
+			path: path.resolve(__dirname, 'out/'),
 		},
 		plugins: [
 			new webpack.ProvidePlugin({

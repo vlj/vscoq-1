@@ -17,6 +17,7 @@
 	"references": [
 		{ "path": "./client" },	
 		{ "path": "./server" },
-		{ "path": "./html_views" }
+		// webpack doesn't work with reference project yet
+		//{ "path": "./html_views" }
 	]
 }

@@ -136,7 +136,7 @@ export class HtmlCoqView implements view.CoqView {
       let csspath = path.join(extensionContext.extensionPath, VIEW_PATH, 'src', 'goals', 'proof-view.css');
       let csspathAsWebviewURI = this.panel.webview.asWebviewUri(vscode.Uri.file(csspath));
 
-      let jspath = path.join(extensionContext.extensionPath, VIEW_PATH, 'out', 'src', 'goals', 'goals.js');
+      let jspath = path.join(extensionContext.extensionPath, VIEW_PATH, 'out', 'goals', 'goals.js');
       let jspathAsWebviewURI = this.panel.webview.asWebviewUri(vscode.Uri.file(jspath));      
 
       this.panel.webview.html = mustache.render(doc.getText(), {

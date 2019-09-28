@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "es6",
-		"module": "amd",
+		"module": "commonjs",
 		"outDir": "out",
 		"noLib": false,
 		"forceConsistentCasingInFileNames": true,
@@ -12,7 +12,6 @@
 		"noImplicitThis": true,
 		"strictNullChecks": true,
 		"sourceMap": true,
-		"composite": true
 	},
 	"include": [
 		"src"

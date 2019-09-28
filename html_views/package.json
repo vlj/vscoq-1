@@ -12,7 +12,7 @@
     "Programming Languages"
   ],
   "scripts": {
-    "compile": "webpack --env.development && shx cp src/goals/*.{css,html} ../client/html_views/goals && shx cp src/ltacprof/*.html ../client/html_views/ltacprof"
+    "webpack": "webpack --env.development && shx cp src/goals/*.{css,html} ../client/html_views/goals && shx cp src/ltacprof/*.html ../client/html_views/ltacprof"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.30",
