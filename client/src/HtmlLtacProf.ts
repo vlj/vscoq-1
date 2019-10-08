@@ -50,13 +50,11 @@ export class HtmlLtacProf {
     }
     
     const httpServer = this.httpServer = http.createServer();
+    httpServer.on('error', (err:Error) => console.log(err))
     this.serverReady = new Promise<void>((resolve, reject) =>
-      httpServer.listen(0,'localhost',undefined,(e:any) => {
-        if(e)
-          reject(e)
-        else
+      httpServer.listen(0,'localhost',undefined,() => {
           resolve();
-      }));
+      }))
     this.server = new WebSocket.Server({server: httpServer});
     this.server.on('connection', (ws: WebSocket) => {
       ws.onmessage = (event) => this.handleClientMessage(event);
@@ -81,6 +79,10 @@ export class HtmlLtacProf {
         const serverAddress = this.httpServer.address();
 
         const templateFileName = vscode.Uri.file(extensionContext.asAbsolutePath('html_views/ltacprof/LtacProf.html'));
+        if (serverAddress === null)
+          throw "serverAddress is null"
+        if (typeof serverAddress === 'string')
+          throw "serverAddress is string"
         this.coqViewUri = vscode.Uri.parse(`coq-view://${templateFileName.path.replace(/%3A/, ':')}?host=${serverAddress.address}&port=${serverAddress.port}`);
         console.log("LtacProf: " + decodeURIComponent(this.coqViewUri.with({scheme: 'file'}).toString()));
         resolve();

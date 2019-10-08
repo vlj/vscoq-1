@@ -921,7 +921,12 @@ export class CoqDocument implements TextDocument {
     try {
       const results : vscode.SymbolInformation[] = [];
       for(let sent of this.document.getSentences()) {
+        const pos = vscode.Position.create(0, 0)
+        const rng : vscode.Range = {start:pos, end:pos}
+        const loc : vscode.Location = {uri:"", range:rng}
+        const tmp : vscode.SymbolInformation = { name: "tmp", kind:vscode.SymbolKind.Function, location:loc}
         results.push(...sent.getSymbols());
+        results.push(tmp)
       }
       return results;
     } catch(err) {

@@ -281,7 +281,7 @@ export interface EditAtJumpFocusReturn {
   focusedQedState: StateId,
   oldFocusedState: StateId,
 }
-export type Hint = [string,string][];
+export type Hint = Pair<string,string>[];
 export interface HintsReturn {
   hintsA: Hint[],
   hintB: Hint,

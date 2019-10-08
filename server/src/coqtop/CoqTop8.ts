@@ -106,14 +106,15 @@ export class CoqTop extends IdeSlave8 implements coqtop.CoqTop {
   private startListening(server: net.Server) : Promise<void> {
     const port = 0;
     const host = 'localhost';
-    return new Promise<void>((resolve,reject) => {
-      server.listen({port: port, host: host}, (err:any) => {
-        if (err)
-          reject(err);
-        else {
-          this.console.log(`Listening at ${server.address().address}:${server.address().port}`);
-          resolve();
-        }
+    server.on('error', (err:any) => this.console.log(err))
+    return new Promise<void>((resolve, reject) => {
+      server.listen({ port: port, host: host }, () => {
+        const addressInfo = server.address()
+        if (addressInfo ==null || typeof addressInfo === 'string')
+          this.console.log('Invalid adressInfo')
+        else
+          this.console.log(`Listening at ${addressInfo.address}:${addressInfo.port}`);
+        resolve();
       });
     });
   }
@@ -143,11 +144,21 @@ export class CoqTop extends IdeSlave8 implements coqtop.CoqTop {
   private async setupCoqTopReadAndWritePorts() : Promise<void> {
     await Promise.all(this.readyToListen);
 
-    var mainAddr = this.mainChannelServer.address();
-    var mainPortW = this.mainChannelServer2.address().port;
-    var controlAddr = this.controlChannelServer.address();
-    var controlPortW = this.controlChannelServer2.address().port;
-    var mainAddressArg = mainAddr.address + ':' + mainAddr.port + ':' + mainPortW;
+    const mainAddrInfo2 = this.mainChannelServer2.address();
+    const mainAddrInfo = this.mainChannelServer.address();
+    const controlAddr = this.controlChannelServer.address();
+    const controlAddr2 = this.controlChannelServer2.address();
+    if (mainAddrInfo == null ||typeof mainAddrInfo === 'string')
+      throw 'invalid mainAddrInfo'  
+    if (mainAddrInfo2 == null || typeof mainAddrInfo2 === 'string' )
+      throw 'invalid mainAddrInfo2'
+    if (controlAddr == null || typeof controlAddr === 'string')
+      throw 'invalid controlAddr'
+    if (controlAddr2 == null || typeof controlAddr2 === 'string')
+      throw 'invalid controlAddr2'
+    var mainPortW = mainAddrInfo2.port;
+    var controlPortW = controlAddr2.port;
+    var mainAddressArg = mainAddrInfo.address + ':' + mainAddrInfo.port + ':' + mainPortW;
     var controlAddressArg = controlAddr.address + ':' + controlAddr.port + ':' + controlPortW;
 
     try {
